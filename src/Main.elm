@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Html exposing (..)
+import Ports exposing (duration, requestDuration, DurationFormat)
 import Html.Attributes exposing (..)
 import Html.App as Html
 import Time as Time
@@ -22,32 +23,42 @@ main =
 
 
 type alias Model =
-    { currentTime : Time.Time }
+    { remainingTime : Time.Time
+    , remainingDur : Maybe DurationFormat
+    }
 
+endTime : Time.Time
+endTime = 1473701400 * Time.second
 
 init : (Model, Cmd Msg)
-init = ({ currentTime = 0 }, Cmd.none)
+init = ({ remainingTime = 0, remainingDur = Nothing }, Cmd.none)
 
 
 -- UPDATE
 
 
 type Msg = Tick Time.Time
+         | RequestDuration Time.Time
+         | Duration DurationFormat
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         Tick time ->
-            ({ currentTime = time }, Cmd.none)
+            ({ model | remainingTime = time }, requestDuration time)
+        RequestDuration time ->
+            (model, requestDuration time)
+        Duration dur ->
+            ({ model | remainingDur = Just dur }, Cmd.none)
 
 
-currentTime : Sub Msg
-currentTime = Time.every Time.second Tick
+countdown : Sub Msg
+countdown = Time.every Time.second (\t -> Tick (endTime - t))
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ = currentTime
+subscriptions _ = Sub.batch [ countdown, duration Duration ]
 
 
 -- VIEW
@@ -58,8 +69,9 @@ view model =
     div [ class "container", style [ ( "margin-top", "30px" ), ( "text-align", "center" ) ] ]
         [ div [ class "row" ]
             [ div [ class "col-xs-12" ]
-                [ p [] [ text ("passy-party") ]
-                , pre [] [ text <| toString <| model.currentTime ]
+                [ p [] [ text ("passy.party 🎉") ]
+                , pre [] [ text <| toString <| model.remainingTime ]
+                , pre [] [ text <| toString <| model.remainingDur ]
                 ]
             ]
         ]
