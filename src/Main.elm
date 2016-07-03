@@ -2,9 +2,11 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Ports exposing (duration, requestDuration, DurationFormat)
+import Cmd.Extra exposing (message)
 import Html.Attributes exposing (..)
 import Html.App as Html
 import Time as Time
+import Task as Task
 import String as String
 
 
@@ -32,14 +34,15 @@ endTime : Time.Time
 endTime = 1473701400 * Time.second
 
 init : (Model, Cmd Msg)
-init = ({ remainingTime = 0, remainingDur = Nothing }, Cmd.none)
+init = ({ remainingTime = 0, remainingDur = Nothing }, message RequestTick)
 
 
 -- UPDATE
 
 
 type Msg = Tick Time.Time
-         | RequestDuration Time.Time
+         | Noop
+         | RequestTick
          | Duration DurationFormat
 
 
@@ -48,8 +51,10 @@ update msg model =
     case msg of
         Tick time ->
             ({ model | remainingTime = time }, requestDuration time)
-        RequestDuration time ->
-            (model, requestDuration time)
+        Noop ->
+            model ! []
+        RequestTick ->
+            (model, Task.perform (\_ -> Noop) (\t -> Tick (endTime - t)) Time.now)
         Duration dur ->
             ({ model | remainingDur = Just dur }, Cmd.none)
 
