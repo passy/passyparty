@@ -64,16 +64,21 @@ subscriptions _ = Sub.batch [ countdown, duration Duration ]
 
 -- VIEW
 
+pluralize : Float -> String -> String
+pluralize i word = case floor i of
+    1 -> word
+    _ -> word ++ "s"
+
 formatDuration : DurationFormat -> String
 formatDuration dur =
     String.join " " [ toString dur.days
-                    , "days"
+                    , pluralize dur.days "day"
                     , toString dur.hours
-                    , "hours"
+                    , pluralize dur.hours "hour"
                     , toString dur.minutes
-                    , "minutes"
+                    , pluralize dur.minutes "minute"
                     , toString dur.seconds
-                    , "seconds"
+                    , pluralize dur.seconds "second"
                     ]
 
 view : Model -> Html Msg
