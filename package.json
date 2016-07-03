@@ -23,6 +23,7 @@
     "elm-webpack-loader": "^3.0.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "gh-pages-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.17.0",
     "node-sass": "^3.7.0",
     "postcss-loader": "^0.9.1",
