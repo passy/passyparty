@@ -5,6 +5,7 @@ import Ports exposing (duration, requestDuration, DurationFormat)
 import Html.Attributes exposing (..)
 import Html.App as Html
 import Time as Time
+import String as String
 
 
 -- APP
@@ -63,15 +64,28 @@ subscriptions _ = Sub.batch [ countdown, duration Duration ]
 
 -- VIEW
 
+formatDuration : DurationFormat -> String
+formatDuration dur =
+    String.join " " [ toString dur.days
+                    , "days"
+                    , toString dur.hours
+                    , "hours"
+                    , toString dur.minutes
+                    , "minutes"
+                    , toString dur.seconds
+                    , "seconds"
+                    ]
 
 view : Model -> Html Msg
 view model =
-    div [ class "container", style [ ( "margin-top", "30px" ), ( "text-align", "center" ) ] ]
+    let duration = case model.remainingDur of
+        Just d  -> text <| formatDuration <| d
+        Nothing -> text ""
+    in div [ class "container-fluid", style [ ( "margin-top", "30px" ), ( "text-align", "center" ) ] ]
         [ div [ class "row" ]
             [ div [ class "col-xs-12" ]
-                [ p [] [ text ("passy.party 🎉") ]
-                , pre [] [ text <| toString <| model.remainingTime ]
-                , pre [] [ text <| toString <| model.remainingDur ]
+                [ h1 [] [ text "🎉" ]
+                , p [ style [ ( "margin-top", "15px" ) ] ] [ duration ]
                 ]
             ]
         ]
