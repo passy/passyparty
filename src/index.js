@@ -5,7 +5,7 @@ const Elm = require('./Main');
 const moment = require('moment');
 const app = Elm.Main.embed(document.getElementById('main'));
 
-app.ports.requestDuration.subscribe(ms => {
+app.ports.requestDuration.subscribe(function (ms) {
   const dur = moment.duration(ms);
   app.ports.duration.send({
     days: Math.floor(dur.asDays()),
