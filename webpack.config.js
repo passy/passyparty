@@ -6,6 +6,7 @@ var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var GhPagesWebpackPlugin = require('gh-pages-webpack-plugin');
+var OfflinePlugin = require('offline-plugin');
 
 console.log('WEBPACK GO!');
 
@@ -123,7 +124,7 @@ if (TARGET_ENV === 'production') {
           from: 'src/favicon.ico'
         },
         {
-          from: 'src/*.webmanifest'
+          from: 'src/passy.party.webmanifest'
         },
       ]),
 
@@ -142,6 +143,8 @@ if (TARGET_ENV === 'production') {
         }
       // mangle:  true
       }),
+
+      new OfflinePlugin(),
 
       new GhPagesWebpackPlugin({
         path: './dist',
