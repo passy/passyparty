@@ -5,7 +5,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var GhPagesWebpackPlugin = require('gh-pages-webpack-plugin');
 var OfflinePlugin = require('offline-plugin');
 
 console.log('WEBPACK GO!');
@@ -15,9 +14,6 @@ var TARGET_ENV;
 switch (process.env.npm_lifecycle_event) {
   case 'build':
     TARGET_ENV = 'production';
-    break;
-  case 'deploy':
-    TARGET_ENV = 'deployment';
     break;
   default:
     TARGET_ENV = 'development';
@@ -157,19 +153,6 @@ if (TARGET_ENV === 'production') {
       }),
 
       new OfflinePlugin(),
-    ]
-  });
-} else if (TARGET_ENV == 'deployment') {
-  console.log('Deploying');
-
-  module.exports = merge(commonConfig, {
-    plugins: [
-      new GhPagesWebpackPlugin({
-        path: DIST_DIR,
-        options: {
-          message: 'Update gh-pages'
-        }
-      })
     ]
   });
 }
