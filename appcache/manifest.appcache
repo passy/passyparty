@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#ver:7/5/2016, 9:29:07 PM
+#ver:7/5/2016, 9:44:58 PM
 
 CACHE:
 ../f4769f9bdb7466be65088239c12046d1.eot
@@ -12,6 +12,7 @@ CACHE:
 ../
 ../img/favicon.png
 ../img/favicon.svg
+../CNAME
 ../passy.party.webmanifest
 
 NETWORK:
