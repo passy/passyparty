@@ -132,6 +132,9 @@ if (TARGET_ENV === 'production') {
           from: 'src/favicon.ico'
         },
         {
+          from: 'CNAME'
+        },
+        {
           from: 'src/passy.party.webmanifest'
         },
       ]),
