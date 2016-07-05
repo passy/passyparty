@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot --inline --content-base src/",
+    "deploy": "webpack",
     "build": "rimraf dist && webpack",
     "watch": "webpack --watch"
   },

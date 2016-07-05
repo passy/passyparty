@@ -10,14 +10,26 @@ var OfflinePlugin = require('offline-plugin');
 
 console.log('WEBPACK GO!');
 
+var TARGET_ENV;
 // detemine build env
-var TARGET_ENV = process.env.npm_lifecycle_event === 'build' ? 'production' : 'development';
+switch (process.env.npm_lifecycle_event) {
+  case 'build':
+    TARGET_ENV = 'production';
+    break;
+  case 'deploy':
+    TARGET_ENV = 'deployment';
+    break;
+  default:
+    TARGET_ENV = 'development';
+}
+
+var DIST_DIR = path.resolve(__dirname, 'dist/');
 
 // common webpack config
 var commonConfig = {
 
   output: {
-    path: path.resolve(__dirname, 'dist/'),
+    path: DIST_DIR,
     filename: '[hash].js',
   },
 
@@ -145,9 +157,15 @@ if (TARGET_ENV === 'production') {
       }),
 
       new OfflinePlugin(),
+    ]
+  });
+} else if (TARGET_ENV == 'deployment') {
+  console.log('Deploying');
 
+  module.exports = merge(commonConfig, {
+    plugins: [
       new GhPagesWebpackPlugin({
-        path: './dist',
+        path: DIST_DIR,
         options: {
           message: 'Update gh-pages'
         }
