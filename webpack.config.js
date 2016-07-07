@@ -49,6 +49,9 @@ var commonConfig = {
       template: 'src/index.html',
       inject: 'body',
       filename: 'index.html'
+    }),
+    new webpack.DefinePlugin({
+      ENV: { 'TARGET': TARGET_ENV }
     })
   ],
 
