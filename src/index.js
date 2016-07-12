@@ -1,7 +1,11 @@
 'use strict';
 
 require('./styles/main.scss');
-require('offline-plugin/runtime').install();
+
+if (ENV.TARGET_ENV === 'production') {
+  require('offline-plugin/runtime').install();
+}
+
 const Elm = require('./Main');
 const moment = require('moment');
 const app = Elm.Main.embed(document.getElementById('main'));
