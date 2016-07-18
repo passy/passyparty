@@ -51,7 +51,7 @@ var commonConfig = {
       filename: 'index.html'
     }),
     new webpack.DefinePlugin({
-      ENV: { 'TARGET': TARGET_ENV }
+      ENV: { 'TARGET_ENV': "'" + TARGET_ENV + "'" }
     })
   ],
 
