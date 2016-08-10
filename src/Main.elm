@@ -45,12 +45,12 @@ type alias Model =
 
 endTime : Time.Time
 endTime =
-    1473701400 * Time.second
+    1473694200 * Time.second
 
 
 endImage : Url
 endImage =
-    Url "//giphy.com/embed/HP5dest4oOHf2?html5=true"
+    Url "//giphy.com/embed/JdCz7YXOZAURq?html5=true"
 
 
 init : ( Model, Cmd Msg )
