@@ -45,7 +45,7 @@ type alias Model =
 
 endTime : Time.Time
 endTime =
-    1473694200 * Time.second
+    1474272000 * Time.second
 
 
 endImage : Url
