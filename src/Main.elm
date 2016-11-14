@@ -4,7 +4,6 @@ import Html exposing (..)
 import Ports exposing (duration, requestDuration, DurationFormat)
 import Cmd.Extra exposing (message)
 import Html.Attributes exposing (..)
-import Html.App as Html
 import Time as Time
 import Task as Task
 import String as String
@@ -13,9 +12,9 @@ import String as String
 -- APP
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    Html.program
+    program
         { init = init
         , view = view
         , update = update
@@ -83,7 +82,7 @@ update msg model =
             model ! []
 
         RequestTick ->
-            ( model, Task.perform (\_ -> Noop) evalTime Time.now )
+            ( model, Task.perform evalTime Time.now )
 
         Duration dur ->
             ( { model | remainingDur = Just dur }, Cmd.none )
